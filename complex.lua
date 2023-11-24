@@ -10,6 +10,13 @@ function check.number(n,i)
   assert(tonumber(n),"bad argument #%d (number expected, got %s)",i,type(n))
 end
 
+function complex_Distance(x1, x2)
+    local r = x2.r - x1.r
+    local i = x2.i - x1.i
+
+    return math.sqrt(r * r + i * i)
+end
+
 complex = {
     __add = function(x1, x2)
         if type(x1) == "number" then
@@ -60,6 +67,10 @@ complex = {
         
         return math.sqrt(r * r + i * i)
 
+    end,
+
+    distance = function (x1, x2)
+        return complex_Distance(x1, x2)
     end
 }
 complex.__index = complex
