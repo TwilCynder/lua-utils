@@ -18,6 +18,12 @@ function complex_Distance(x1, x2)
 end
 
 complex = {
+    __eq = function(x1, x2)
+        check.complex(x1,1)
+        check.complex(x2,2)
+        return x1.r == x2.r and x1.i == x2.i 
+    end,
+
     __add = function(x1, x2)
         if type(x1) == "number" then
             return Newcomplex(x1 + x2.r, x2.i)
@@ -53,6 +59,23 @@ complex = {
             return Newcomplex(x1.r*x2.r-x1.i*x2.i,x1.r*x2.i+x1.i*x2.r)
         end
     end,
+    __div = function(x1, x2)
+        if type(x1) == "number" then
+            local divider = x2.r * x2.r + x2.i * x2.i
+            return Newcomplex(x1 * x2.r / divider, -x1 * x2.i / divider)
+        elseif type(x2) == "number" then
+            return Newcomplex(x1.r * x2, x1.r * x2)
+        else
+            check.complex(x1,1)
+            check.complex(x2,2)
+            local divider = x2.r * x2.r + x2.i * x2.i
+            return Newcomplex(
+                (x1.r * x2.r + x1.i * x2.i) / divider,
+                (x1.i * x2.r - x1.r * x2.i) / divider
+            )
+        end
+    end    
+    ,
 
     absolute = function (x)
         local r = x.r
