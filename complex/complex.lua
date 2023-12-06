@@ -17,6 +17,8 @@ function complex_Distance(x1, x2)
     return math.sqrt(r * r + i * i)
 end
 
+
+
 complex = {
     __eq = function(x1, x2)
         check.complex(x1,1)
@@ -74,8 +76,10 @@ complex = {
                 (x1.i * x2.r - x1.r * x2.i) / divider
             )
         end
-    end    
-    ,
+    end,
+    __tostring = function (self)
+        return string.format("%s + %si", self.r, self.i)
+    end,
 
     absolute = function (x)
         local r = x.r
@@ -98,6 +102,10 @@ complex = {
 }
 complex.__index = complex
 
+function type(x)
+    return getmetatable(x) == complex and "complex" or type(x)
+end
+
 function Newcomplex(r, i)
     return setmetatable({
         r = r,
@@ -106,3 +114,5 @@ function Newcomplex(r, i)
 end
 
 math.i = Newcomplex(0, 1)
+
+return Newcomplex, check, complex
