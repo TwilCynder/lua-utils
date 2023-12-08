@@ -17,8 +17,6 @@ function complex_Distance(x1, x2)
     return math.sqrt(r * r + i * i)
 end
 
-
-
 complex = {
     __eq = function(x1, x2)
         check.complex(x1,1)
@@ -96,9 +94,28 @@ complex = {
 
     end,
 
+    absSqr = function(x)
+        local r = x.r
+        local i = x.i
+        return r * r + i * i
+    end,
+
+    square = function (x)
+        return Newcomplex(x.r*x.r-x.i*x.i,x.r*x.i+x.i*x.r)
+    end,
+
     distance = function (x1, x2)
         return complex_Distance(x1, x2)
+    end,
+
+    opt_squareSelf = function(x)
+        local r = x.r
+        local i = x.i
+        
+        x.r = r*r-i*i
+        x.i = 2*r*i
     end
+
 }
 complex.__index = complex
 
